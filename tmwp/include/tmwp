@@ -1,0 +1,106 @@
+extern "C"
+{
+#include<binarySearchTree.h>
+}
+namespace tmwp
+{
+class TMWebProjector;
+typedef struct _request
+{
+char *method;
+char *resource;
+char isClientSideTechnologyResource;
+char *mimeType;
+int dataCount;
+char **data;
+}REQUEST;
+
+typedef struct __pair
+{
+char *name;
+char *value;
+}PAIR;
+
+class Request
+{
+private:
+int isForward;
+REQUEST *request;
+//char ***data;
+BinarySearchTree requestDataBinarySearchTree;
+public:
+Request(REQUEST *request);
+~Request();
+char * get(const char *name);
+void forward(const char *url);
+};
+
+class Response
+{
+private:
+int clientSocketDescriptor;
+int isConnectionOpen;
+int headerStatus;
+void sendHeader();
+public:
+Response(int clientSocketDescriptor);
+void write(const char *byteStream);
+void close();
+};
+
+typedef struct _urlMapNode
+{
+char *url;
+void (*ptrOnRequest)(Request &request,Response &response);
+//struct _urlMapNode *next;
+}URL_MAP_NODE;
+
+/*
+class URLMap
+{
+private:
+int size;
+URL_MAP_NODE *top;
+public:
+URLMap();
+~URLMap();
+int getSize();
+void add(const char *url,void (*ptrOnRequest)(Request &request,Response &response));
+void remove(const char *url);
+void removeAll();
+void (*getValue(const char *url))(Request &request,Response &response);
+};
+*/
+
+
+class TMWebProjector
+{
+private:
+int portNumber;
+//char *url;
+//void (*ptrOnRequest)(int,char *[]);
+//void (*ptrOnRequest)(Request &request,Response &response);
+//URLMap urlMap;
+
+
+public:
+BinarySearchTree urlBinarySearchTree;
+TMWebProjector(int portNumber);
+~TMWebProjector();
+void start();
+//void onRequest(const char *url,void (*ptrOnRequest)(int,char *[]));
+void onRequest(const char *url,void (*ptrOnRequest)(Request &request,Response &response));
+};
+
+class URLEncoder
+{
+public:
+static void encode(char *url,char *encodedUrl);
+};
+
+class URLDecoder
+{
+public:
+static void decode(char *url,char *decodedUrl);
+};
+}

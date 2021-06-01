@@ -1,0 +1,1 @@
+gcc -static eg1.c -o eg1.exe -I ..\..\..\include -I ..\..\..\..\queue\include -I ..\..\..\..\stack\include -L ..\..\..\lib -L ..\..\..\..\queue\lib -L ..\..\..\..\stack\lib -l binarySearchTree -l queue -l stack

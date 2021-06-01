@@ -1,0 +1,1 @@
+gcc -static GetNodeValueTestCase.c -o GetNodeValueTestCase.exe -I ..\..\include -I ..\..\..\queue\include -I ..\..\..\stack\include -L ..\..\lib -L ..\..\..\queue\lib -L ..\..\..\stack\lib -l binarySearchTree -l queue -l stack
